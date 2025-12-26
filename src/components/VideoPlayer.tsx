@@ -5,7 +5,6 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
-  // YouTube URL에서 Video ID 추출
   const getVideoId = (url: string) => {
     const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
     return match ? match[1] : ''
@@ -18,10 +17,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
       position: 'relative', 
       paddingTop: '56.25%',
       marginBottom: '2rem',
-      width: '100%'
+      width: '100%',
+      maxWidth: '100%'
     }}>
       <iframe
-        src={`https://www.youtube.com/embed/${videoId}`}
+        src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`}
         style={{
           position: 'absolute',
           top: 0,
@@ -30,8 +30,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
           height: '100%',
           border: 0
         }}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
+        title="YouTube video player"
       />
     </div>
   )

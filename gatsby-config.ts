@@ -62,6 +62,18 @@ const config: GatsbyConfig = {
         ],
       },
     },
+    // ⬇️⬇️⬇️ 여기에 추가 ⬇️⬇️⬇️
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          '/*': [
+            'Content-Security-Policy: frame-src https://www.youtube.com https://www.youtube-nocookie.com',
+          ],
+        },
+      },
+    },
+    // ⬆️⬆️⬆️ 여기까지 추가 ⬆️⬆️⬆️
     // You can remove this plugin if you don't need it
     shouldAnalyseBundle && {
       resolve: `gatsby-plugin-webpack-statoscope`,
