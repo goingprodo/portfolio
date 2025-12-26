@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface VideoPlayerProps {
   url: string
@@ -12,28 +12,16 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
 
   const videoId = getVideoId(url)
 
+  useEffect(() => {
+    // lite-youtube 웹 컴포넌트 로드
+    if (typeof window !== 'undefined' && !customElements.get('lite-youtube')) {
+      import('@justinribeiro/lite-youtube')
+    }
+  }, [])
+
   return (
-    <div style={{ 
-      position: 'relative', 
-      paddingTop: '56.25%',
-      marginBottom: '2rem',
-      width: '100%',
-      maxWidth: '100%'
-    }}>
-      <iframe
-        src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          border: 0
-        }}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-        title="YouTube video player"
-      />
+    <div style={{ marginBottom: '2rem', width: '100%' }}>
+      <lite-youtube videoid={videoId}></lite-youtube>
     </div>
   )
 }
